@@ -1,44 +1,50 @@
-var drawCell = function(x,y,width,height, border) {
-  ctx.fillRect(x,y,width-border,height-border);
+GameView = function(boardId){
+  var canvas = this.canvas = document.getElementById(boardId);
+  canvas.height = document.body.clientHeight - 100;
+  canvas.width = canvas.height;
+  var ctx = this.ctx = canvas.getContext("2d");
+  var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+  my_gradient.addColorStop(0,"black");
+  my_gradient.addColorStop(1,"grey");
+  ctx.fillStyle = my_gradient;
+}
+
+GameView.prototype.drawCell = function(x,y,width,height, border) {
+  this.ctx.fillRect(x,y,width-border,height-border);
 };
 
-var cellDimension = function(){
-  var cellWidth = (canvas.width/15);
+GameView.prototype.cellDimension = function(){
+  var cellWidth = (this.canvas.width/15);
   return cellWidth
 };
 
-
-var drawBoard = function(){
+GameView.prototype.drawBoard = function(){
+  var self = this
   var allCells = board.allCells();
   _.each(allCells, function(cell){
     if (cell.life === true) {
-      var cellDim = cellDimension();
-      drawCell((cell.x)*cellDim,(cell.y)*cellDim,cellDim,cellDim, 5);
+      var cellDim = self.cellDimension();
+      self.drawCell((cell.x)*cellDim,(cell.y)*cellDim,cellDim,cellDim, 5);
     }
   });
 };
 
-var clearBoard = function(){
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+GameView.prototype.clearBoard = function(){
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
 
-var canvas = document.getElementById('board');
-canvas.height = document.body.clientHeight - 100;
-canvas.width = canvas.height;
-var ctx = canvas.getContext("2d");
-var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-my_gradient.addColorStop(0,"black");
-my_gradient.addColorStop(1,"grey");
-ctx.fillStyle = my_gradient;
 
-drawBoard();
+board = new Board(15)
+
+var gameView = new GameView('board')
+gameView.drawBoard();
 
 setInterval(function(){
   board.rule1();
   board.rule3();
   board.rule4();
   board.grid = board.gridCopy;
-  clearBoard();
-  drawBoard();
+  gameView.clearBoard();
+  gameView.drawBoard();
   board.checkBoard();
 }, 300);

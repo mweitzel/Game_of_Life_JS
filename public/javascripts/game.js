@@ -20,9 +20,11 @@ Cell.prototype.neighbors = function () {
   ];
 };
 
-var Board = function() {
+var Board = function(size) {
   this.grid = [];
   this.gridCopy = [];
+  this.initializeGrid(size);
+  this.checkBoard();
 };
 
 Board.prototype.initializeGrid = function (rows) {
@@ -118,9 +120,3 @@ var randomLife = function (x,y) {
     return cell;
   }
 };
-
-
-board = new Board
-board.initializeGrid(15);
-board.checkBoard();
-
