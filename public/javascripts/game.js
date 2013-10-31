@@ -101,6 +101,14 @@ Board.prototype.rule4 = function () {
   });
 }
 
+Board.prototype.performGeneration = function(){
+  this.rule1();
+  this.rule3();
+  this.rule4();
+  this.grid = board.gridCopy;
+  this.checkBoard();
+}
+
 //Helper methods
 var randomLife = function (x,y) {
   var rand = Math.floor(Math.random()*2);

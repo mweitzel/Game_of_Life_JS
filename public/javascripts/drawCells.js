@@ -40,11 +40,7 @@ var gameView = new GameView('board')
 gameView.drawBoard();
 
 setInterval(function(){
-  board.rule1();
-  board.rule3();
-  board.rule4();
-  board.grid = board.gridCopy;
+  board.performGeneration()
   gameView.clearBoard();
   gameView.drawBoard();
-  board.checkBoard();
 }, 300);
