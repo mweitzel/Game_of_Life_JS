@@ -1,10 +1,3 @@
-var addElement = function(){
-  var gameSpace = document.getElementById('board');
-  var cellSpace = document.createElement('div');
-  cellSpace.className = 'cell';
-  gameSpace.appendChild(cellSpace);
-};
-
 var Cell = function(x,y, life) {
   this.x = x;
   this.y = y;
